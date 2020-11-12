@@ -128,7 +128,7 @@ body {
   padding-bottom: 0;
 }
 
-.post-title {
+.post-titles {
   margin-top: 0;
   margin-bottom: 19px;
   font-weight: 600;
@@ -141,6 +141,7 @@ body {
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
+  word-break: break-word;
 }
 
 .tags {
@@ -331,6 +332,7 @@ body {
 .edit-container {
   display: none;
 }
+
 .edit-container.visible {
   display: block;
 }
@@ -442,6 +444,10 @@ body {
   margin-top: 20px;
 }
 
+.button-new-post.visible {
+  display: flex;
+}
+
 .icon-fire {
   fill: #fff;
   width: 11px;
@@ -520,10 +526,13 @@ body {
 .add-post {
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+  padding: 1em;
 }
 
 .add-title,
-.add-text {
+.add-text,
+.add-tags {
   background: #ffffff;
   border: 1px solid #e8e8e8;
   padding: 23px 30px;
@@ -532,16 +541,60 @@ body {
 
 .add-text {
   min-height: 362px;
+  resize: none;
 }
 
 .add-button {
   width: 100%;
-  max-width: 370px;
-  margin-right: 2%;
 }
 
 .add-post .button-outline {
   margin-right: 1%;
+}
+
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+  transition: opacity .15s linear;
+}
+
+.modal-backdrop.visible {
+  display: block;
+  opacity: .5;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  overflow: hidden;
+  outline: 0;
+  max-height: 0;
+}
+
+.modal-container.visible {
+  display: block;
+  max-height: 100%;
+}
+
+.modal-dialog {
+  transition: -webkit-transform .3s ease-out;
+  transform: translate(0, -100%);
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+
+.modal-container.visible .modal-dialog {
+  transform: translate(0, 0);
 }
 
 @media (max-width: 990px) {
