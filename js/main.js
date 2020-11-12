@@ -151,7 +151,6 @@ const showAllPosts = () => {
   setPosts.allPosts.forEach(post => {
     let user = setUsers.getUser(post.author);
     let avatar = user ? user.photo ? user.photo : 'img/avatar.jpeg' : 'img/avatar.jpeg';
-    let tags = post.tags.map(tag => '<a href="#" class="tag">#' + tag + '</a>').join('');
 
     postHTML += `
      <section class="post">
@@ -159,7 +158,7 @@ const showAllPosts = () => {
           <h2 class="post-title">${post.title}</h2>
           <p class="post-text">${post.text}</p>
           <div class="tags">
-            ${tags}
+            ${post.tags.map(tag => `<a href="#" class="tag">#${tag}</a>`).join('')}
           </div>
         </div>
         <div class="post-footer">
