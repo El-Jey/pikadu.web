@@ -15,6 +15,7 @@ firebase.initializeApp(firebaseConfig);
 const menuToggle = document.querySelector('#menu-toggle');
 // Создаем переменную, в которую положим меню
 const menu = document.querySelector('.sidebar');
+
 const regExpValidEmail = /^\w+@\w+\.\w{2,}$/;
 const loginElem = document.querySelector('.login');
 const loginForm = document.querySelector('.login-form');
@@ -36,6 +37,7 @@ const buttonNewPost = document.querySelector('.button-new-post');
 const modalBackdrop = document.querySelector('.modal-backdrop');
 const modalContainer = document.querySelector('.modal-container');
 const passwordForgetElem = document.querySelector('.login-forget');
+const likesElem = document.querySelector('.likes');
 
 const setUsers = {
   user: null,
@@ -151,7 +153,16 @@ const setPosts = {
     firebase.database().ref('post').on('value', snapshot => {
       this.allPosts = snapshot.val() || [];
       callback();
-    })
+    });
+  },
+  likePost(id) {
+    const post = this.allPosts[id];
+    post.likes = post.likes + 1;
+
+    let updates = {};
+    updates['/post/' + id] = post;
+    
+    firebase.database().ref().update(updates);
   }
 };
 
@@ -174,11 +185,11 @@ const toggleAuthDom = () => {
 const showAllPosts = () => {
   let postHTML = '';
 
-  setPosts.allPosts.forEach(post => {
+  setPosts.allPosts.forEach((post, i) => {
     let tags = post.tags || [];
 
     postHTML += `
-     <section class="post">
+     <section data-post-id="${i}" class="post">
         <div class="post-body">
           <h2 class="post-title">${post.title}</h2>
           <p class="post-text">${post.text}</p>
@@ -305,7 +316,17 @@ const init = () => {
     event.preventDefault();
     setUsers.sendForgetPassword(emailInput.value);
     emailInput.value = '';
-  })
+  });
+
+  document.addEventListener('click', function (event) {
+    event.preventDefault();
+    const target = event.target;
+
+    if (target.closest('.likes')) {
+      const postID = target.closest('.post').dataset.postId;
+      setPosts.likePost(postID);
+    }
+  });
 
   setUsers.initUser(toggleAuthDom);
   setPosts.getPosts(showAllPosts);
