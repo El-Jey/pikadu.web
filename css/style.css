@@ -528,6 +528,7 @@ body {
   flex-direction: column;
   background-color: #fff;
   padding: 1em;
+  border-radius: .5em;
 }
 
 .add-title,
@@ -540,7 +541,7 @@ body {
 }
 
 .add-text {
-  min-height: 362px;
+  min-height: 300px;
   resize: none;
 }
 
