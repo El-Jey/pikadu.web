@@ -161,7 +161,7 @@ const setPosts = {
 
     let updates = {};
     updates['/post/' + id] = post;
-    
+
     firebase.database().ref().update(updates);
   }
 };
@@ -318,7 +318,7 @@ const init = () => {
     emailInput.value = '';
   });
 
-  document.addEventListener('click', function (event) {
+  document.addEventListener('click', event => {
     event.preventDefault();
     const target = event.target;
 
